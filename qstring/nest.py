@@ -23,7 +23,7 @@ def nest(params):
     :raises qstring.ParameterTypeError:
         if parameters of conflicting types are given.
     """
-    nested = {}
+    nested = collections.OrderedDict()
     params = _convert_params_list_to_dict(params)
     for key, value in params.items():
         try:
@@ -54,7 +54,7 @@ class _ParameterParser(object):
         self.value = value
         self.tokens = list(self._tokenize(key))
         key = self._match_name()
-        return {key: self._parse_object()}
+        return collections.OrderedDict([(key, self._parse_object())])
 
     def _tokenize(self, input):
         for value in re.split(r'([\[\]])', input):
@@ -69,7 +69,7 @@ class _ParameterParser(object):
         if not self.tokens:
             return self.value
         key = self._match_object()
-        return {key: self._parse_object()}
+        return collections.OrderedDict([(key, self._parse_object())])
 
     def _match_name(self):
         token, = self._match('NAME')

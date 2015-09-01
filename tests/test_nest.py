@@ -28,6 +28,21 @@ def test_nest(obj, expected):
     assert qstring.nest(obj) == expected
 
 
+def test_nest_maintains_order():
+    nested = qstring.nest([
+        ('a', '1'),
+        ('b[a]', '1'),
+        ('b[b]', '2'),
+        ('b[c]', '3'),
+        ('c[a][a]', '1'),
+        ('c[a][b]', '2'),
+        ('c[a][c]', '3'),
+    ])
+    assert list(nested.keys()) == ['a', 'b', 'c']
+    assert list(nested['b'].keys()) == ['a', 'b', 'c']
+    assert list(nested['c']['a'].keys()) == ['a', 'b', 'c']
+
+
 @pytest.mark.parametrize(('target', 'source', 'expected'), [
     (
         {'a': '1'},
