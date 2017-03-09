@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from collections import OrderedDict
 
 import pytest
@@ -23,6 +24,10 @@ import qstring
         (
             OrderedDict([('foo', 'bar')]),
             [('foo', 'bar')]
+        ),
+        (
+            OrderedDict([('foo', u'äö')]),
+            [('foo', u'äö')]
         ),
         (
             OrderedDict([('foo', ''), ('bar', '')]),
