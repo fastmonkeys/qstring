@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+0.2.1 (March 24, 2017)
+^^^^^^^^^^^^^^^^^^^^^^
+
+- Fixed ``qstring.unnest`` when values contain non-ASCII characters.
+
+
 0.2.0 (September 1, 2015)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
