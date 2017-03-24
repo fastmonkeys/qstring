@@ -28,6 +28,9 @@ setup(
     package_data={
         '': ['LICENSE']
     },
+    install_requires=[
+        'future',
+    ],
     license=open('LICENSE').read(),
     platforms='any',
     classifiers=[

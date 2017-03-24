@@ -1,3 +1,6 @@
+from builtins import str
+
+
 def unnest(obj):
     """
     Create a list of query string parameters from a nested object.
