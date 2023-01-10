@@ -1,0 +1,36 @@
+[project]
+name = "qstring"
+version = "0.2.0"
+description = "Parse querystring parameters to nested objects"
+readme = "README.rst"
+requires-python = ">=3.7"
+license = { file = "LICENSE" }
+authors = [{ name = "Janne Vanhala", email = "janne@fastmonkeys.com" }]
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: Implementation :: CPython',
+    'Programming Language :: Python :: Implementation :: PyPy',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+]
+dependencies = []
+
+[project.urls]
+"Documentation" = "http://qstring.readthedocs.org"
+"Bug Tracker" = "http://github.com/fastmonkeys/qstring/issues"
+"Code" = "http://github.com/fastmonkeys/qstring"
+
+[tool.isort]
+known_first_party = "qstring"
+skip = "docs"
+line_length = 79
+multi_line_output = 3
