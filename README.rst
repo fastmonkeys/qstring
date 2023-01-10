@@ -1,9 +1,6 @@
 qstring
 =======
 
-.. image:: http://img.shields.io/travis/fastmonkeys/qstring/master.svg
-   :target: http://travis-ci.org/fastmonkeys/qstring
-
 .. image:: http://img.shields.io/pypi/dm/qstring.svg
   :target: https://pypi.python.org/pypi/qstring
 
