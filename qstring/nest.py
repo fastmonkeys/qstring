@@ -48,7 +48,7 @@ def _parse_parameter(key, value):
     return _ParameterParser().parse(key, value)
 
 
-class _ParameterParser(object):
+class _ParameterParser:
     def parse(self, key, value):
         self.key = key
         self.value = value
