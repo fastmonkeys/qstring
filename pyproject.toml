@@ -28,8 +28,6 @@ dependencies = []
 "Bug Tracker" = "http://github.com/fastmonkeys/qstring/issues"
 "Code" = "http://github.com/fastmonkeys/qstring"
 
-[tool.isort]
-known_first_party = "qstring"
-skip = "docs"
-line_length = 79
-multi_line_output = 3
+[tool.ruff]
+extend-exclude = ["docs"]
+select         = ["E", "F", "I"]
