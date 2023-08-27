@@ -4,8 +4,8 @@ Changelog
 0.3.0 (not yet released)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Added support for Python 3.7, 3.8, 3.9, 3.10 and 3.11.
-- Dropped support for Python 2.7, 3.3, 3.4, 3.5 and 3.6.
+- Added support for Python 3.8, 3.9, 3.10 and 3.11.
+- Dropped support for Python 2.7, 3.3, 3.4, 3.5, 3.6 and 3.7.
 
 0.2.1 (March 24, 2017)
 ^^^^^^^^^^^^^^^^^^^^^^
