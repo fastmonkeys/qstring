@@ -37,4 +37,4 @@ strict = true
 
 [tool.ruff]
 extend-exclude = ["docs"]
-select         = ["E", "F", "I"]
+select = ["E", "F", "I", "UP"]
