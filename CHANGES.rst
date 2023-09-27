@@ -9,6 +9,18 @@ Changelog
 - Changed ``qstring.nest`` to use ``dict`` in the returned nested object instead
   of ``OrderedDict``. ``dict`` retains insertion order since Python 3.7, so
   ``OrderedDict`` usage was redundant here.
+- Fixed a bug in ``qstring.nest`` where it returned an incorrect value when
+  there were more than two query parameters with the same name.
+
+  Before::
+
+      >>> qtstring.nest([('foo', '1'), ('foo', '2'), ('foo', '3')])
+      {'foo': [['1', '2'], '3']}
+
+  After::
+
+      >>> qtstring.nest([('foo', '1'), ('foo', '2'), ('foo', '3')])
+      {'foo': ['1', '2', '3']}
 
 0.2.1 (March 24, 2017)
 ^^^^^^^^^^^^^^^^^^^^^^
