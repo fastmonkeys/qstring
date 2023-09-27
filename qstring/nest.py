@@ -109,10 +109,7 @@ def _merge(target: Nested, source: Nested) -> Nested:
         if key in target:
             if not isinstance(value, dict):
                 raise exc.ParameterTypeError(
-                    'Expected dict (got {got}) for param {param!r}'.format(
-                        got=type(value).__name__,
-                        param=key
-                    )
+                    f'Expected dict (got {type(value).__name__}) for param {key!r}'
                 )
             target_value = target[key]
             if not isinstance(target_value, dict):
