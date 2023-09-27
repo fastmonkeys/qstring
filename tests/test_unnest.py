@@ -1,5 +1,3 @@
-from collections import OrderedDict
-
 import pytest
 
 import qstring
@@ -9,47 +7,43 @@ import qstring
     ('obj', 'expected'),
     [
         (
-            OrderedDict([('', '')]),
+            {'': ''},
             [('', '')]
         ),
         (
-            OrderedDict([('foo', '')]),
+            {'foo': ''},
             [('foo', '')]
         ),
         (
-            OrderedDict([('', 'bar')]),
+            {'': 'bar'},
             [('', 'bar')]
         ),
         (
-            OrderedDict([('foo', 'bar')]),
+            {'foo': 'bar'},
             [('foo', 'bar')]
         ),
         (
-            OrderedDict([('foo', 'äö')]),
+            {'foo': 'äö'},
             [('foo', 'äö')]
         ),
         (
-            OrderedDict([('foo', ''), ('bar', '')]),
+            {'foo': '', 'bar': ''},
             [('foo', ''), ('bar', '')]
         ),
         (
-            OrderedDict([('foo', ['1', '2'])]),
+            {'foo': ['1', '2']},
             [('foo', '1'), ('foo', '2')]
         ),
         (
-            OrderedDict([('foo', '1'), ('bar', '2')]),
+            {'foo': '1', 'bar': '2'},
             [('foo', '1'), ('bar', '2')]
         ),
         (
-            OrderedDict([('x', OrderedDict([('y', '1')]))]),
+            {'x': {'y': '1'}},
             [('x[y]', '1')]
         ),
         (
-            OrderedDict([
-                ('x', OrderedDict([
-                    ('y', OrderedDict([('z', '1')]))
-                ]))
-            ]),
+            {'x': {'y': {'z': '1'}}},
             [('x[y][z]', '1')]
         ),
     ]
