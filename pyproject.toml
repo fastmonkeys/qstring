@@ -28,6 +28,16 @@ dependencies = []
 "Bug Tracker" = "http://github.com/fastmonkeys/qstring/issues"
 "Code" = "http://github.com/fastmonkeys/qstring"
 
+[tool.mypy]
+files = ["qstring", "tests"]
+pretty = true
+python_version = "3.8"
+show_error_codes = true
+
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
 [tool.ruff]
 extend-exclude = ["docs"]
 select         = ["E", "F", "I"]
