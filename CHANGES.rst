@@ -6,6 +6,9 @@ Changelog
 
 - Added support for Python 3.8, 3.9, 3.10 and 3.11.
 - Dropped support for Python 2.7, 3.3, 3.4, 3.5, 3.6 and 3.7.
+- Changed ``qstring.nest`` to use ``dict`` in the returned nested object instead
+  of ``OrderedDict``. ``dict`` retains insertion order since Python 3.7, so
+  ``OrderedDict`` usage was redundant here.
 
 0.2.1 (March 24, 2017)
 ^^^^^^^^^^^^^^^^^^^^^^
