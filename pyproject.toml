@@ -34,6 +34,9 @@ pretty = true
 python_version = "3.8"
 show_error_codes = true
 
+check_untyped_defs = true
+strict_concatenate = true
+strict_equality = true
 warn_redundant_casts = true
 warn_unused_configs = true
 warn_unused_ignores = true

@@ -1,8 +1,10 @@
 import collections
 import re
+from typing import Dict, List, Union
 
 from . import exc
 
+Nested = Dict[str, Union[str, List[str], 'Nested']]
 
 def nest(params):
     """
@@ -23,7 +25,7 @@ def nest(params):
     :raises qstring.ParameterTypeError:
         if parameters of conflicting types are given.
     """
-    nested = {}
+    nested: Nested = {}
     params = _convert_params_list_to_dict(params)
     for key, value in params.items():
         try:
@@ -35,13 +37,14 @@ def nest(params):
 
 
 def _convert_params_list_to_dict(params_list):
-    params_dict = {}
+    params_dict: Dict[str, Union[str, List[str]]] = {}
     for key, value in params_list:
         if key in params_dict:
+            old_value = params_dict[key]
             params_dict[key] = (
-                params_dict[key] + [value]
-                if isinstance(params_dict[key], list)
-                else [params_dict[key], value]
+                old_value + [value]
+                if isinstance(old_value, list)
+                else [old_value, value]
             )
         else:
             params_dict[key] = value
