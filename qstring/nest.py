@@ -38,7 +38,11 @@ def _convert_params_list_to_dict(params_list):
     params_dict = {}
     for key, value in params_list:
         if key in params_dict:
-            params_dict[key] = [params_dict[key], value]
+            params_dict[key] = (
+                params_dict[key] + [value]
+                if isinstance(params_dict[key], list)
+                else [params_dict[key], value]
+            )
         else:
             params_dict[key] = value
     return params_dict
