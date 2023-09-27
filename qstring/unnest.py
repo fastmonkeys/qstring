@@ -19,16 +19,13 @@ def unnest(obj: Nested) -> List[Tuple[str, str]]:
 
 
 def _unnest(
-    obj: Union[Nested, List[str], str], prefix: str = ''
+    obj: Union[Nested, List[str], str], prefix: str = ""
 ) -> List[Tuple[str, str]]:
     if isinstance(obj, dict):
         params = []
         for key, value in obj.items():
             params.extend(
-                _unnest(
-                    obj=value,
-                    prefix=prefix + '[' + key + ']' if prefix else key
-                )
+                _unnest(obj=value, prefix=prefix + "[" + key + "]" if prefix else key)
             )
         return params
     elif isinstance(obj, list):
