@@ -1,4 +1,9 @@
-def unnest(obj):
+from typing import List, Tuple, Union
+
+from qstring.nest import Nested
+
+
+def unnest(obj: Nested) -> List[Tuple[str, str]]:
     """
     Create a list of query string parameters from a nested object.
 
@@ -13,7 +18,9 @@ def unnest(obj):
     return _unnest(obj)
 
 
-def _unnest(obj, prefix=''):
+def _unnest(
+    obj: Union[Nested, List[str], str], prefix: str = ''
+) -> List[Tuple[str, str]]:
     if isinstance(obj, dict):
         params = []
         for key, value in obj.items():

@@ -1,12 +1,11 @@
-import collections
 import re
-from typing import Dict, List, Union
+from typing import Dict, Generator, List, Literal, NamedTuple, Tuple, Union
 
 from . import exc
 
 Nested = Dict[str, Union[str, List[str], 'Nested']]
 
-def nest(params):
+def nest(params: List[Tuple[str, str]]) -> Nested:
     """
     Create a nested object from a list of query string parameters.
 
@@ -26,8 +25,8 @@ def nest(params):
         if parameters of conflicting types are given.
     """
     nested: Nested = {}
-    params = _convert_params_list_to_dict(params)
-    for key, value in params.items():
+    params_dict = _convert_params_list_to_dict(params)
+    for key, value in params_dict.items():
         try:
             obj = _parse_parameter(key, value)
         except exc.ParseError:
@@ -36,7 +35,9 @@ def nest(params):
     return nested
 
 
-def _convert_params_list_to_dict(params_list):
+def _convert_params_list_to_dict(
+    params_list: List[Tuple[str, str]]
+) -> Dict[str, Union[str, List[str]]]:
     params_dict: Dict[str, Union[str, List[str]]] = {}
     for key, value in params_list:
         if key in params_dict:
@@ -51,19 +52,26 @@ def _convert_params_list_to_dict(params_list):
     return params_dict
 
 
-def _parse_parameter(key, value):
+def _parse_parameter(key: str, value: Union[str, List[str]]) -> Nested:
     return _ParameterParser().parse(key, value)
 
 
+_TokenType = Literal['LEFT BRACKET', 'RIGHT BRACKET', 'NAME']
+
+class _Token(NamedTuple):
+    type: _TokenType
+    value: str
+
+
 class _ParameterParser:
-    def parse(self, key, value):
+    def parse(self, key: str, value: Union[str, List[str]]) -> Nested:
         self.key = key
         self.value = value
         self.tokens = list(self._tokenize(key))
         key = self._match_name()
         return {key: self._parse_object()}
 
-    def _tokenize(self, input):
+    def _tokenize(self, input: str) -> Generator[_Token, None, None]:
         for value in re.split(r'([\[\]])', input):
             if value == '[':
                 yield _Token('LEFT BRACKET', value)
@@ -72,21 +80,21 @@ class _ParameterParser:
             elif value:
                 yield _Token('NAME', value)
 
-    def _parse_object(self):
+    def _parse_object(self) -> Union[str, List[str], Nested]:
         if not self.tokens:
             return self.value
         key = self._match_object()
         return {key: self._parse_object()}
 
-    def _match_name(self):
+    def _match_name(self) -> str:
         token, = self._match('NAME')
         return token.value
 
-    def _match_object(self):
+    def _match_object(self) -> str:
         _, token, _ = self._match('LEFT BRACKET', 'NAME', 'RIGHT BRACKET')
         return token.value
 
-    def _match(self, *expected_types):
+    def _match(self, *expected_types: _TokenType) -> List[_Token]:
         tokens = self.tokens[:len(expected_types)]
         types = tuple(t.type for t in tokens)
         if types != expected_types:
@@ -95,26 +103,25 @@ class _ParameterParser:
         return tokens
 
 
-_Token = collections.namedtuple('_Token', ['type', 'value'])
-
-
-def _merge(target, source):
+def _merge(target: Nested, source: Nested) -> Nested:
     items = source.items()
     for key, value in items:
         if key in target:
-            _check_parameter_type(dict, key, value)
-            _check_parameter_type(type(target[key]), key, value)
-            value = _merge(target[key], value)
+            if not isinstance(value, dict):
+                raise exc.ParameterTypeError(
+                    'Expected dict (got {got}) for param {param!r}'.format(
+                        got=type(value).__name__,
+                        param=key
+                    )
+                )
+            target_value = target[key]
+            if not isinstance(target_value, dict):
+                raise exc.ParameterTypeError(
+                    'Expected {expected} (got dict) for param {param!r}'.format(
+                        expected=type(target_value).__name__,
+                        param=key
+                    )
+                )
+            value = _merge(target_value, value)
         target[key] = value
     return target
-
-
-def _check_parameter_type(expected_type, param, value):
-    if not isinstance(value, expected_type):
-        raise exc.ParameterTypeError(
-            'Expected {expected} (got {got}) for param {param!r}'.format(
-                expected=expected_type.__name__,
-                got=type(value).__name__,
-                param=param
-            )
-        )

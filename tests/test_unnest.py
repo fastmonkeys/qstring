@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 import pytest
 
 import qstring
@@ -48,5 +50,5 @@ import qstring
         ),
     ]
 )
-def test_unnest(obj, expected):
+def test_unnest(obj: qstring.Nested, expected: List[Tuple[str, str]]) -> None:
     assert qstring.unnest(obj) == expected
