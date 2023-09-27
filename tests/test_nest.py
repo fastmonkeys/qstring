@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 import pytest
 
 import qstring
@@ -24,11 +26,11 @@ from qstring.nest import _merge
         ([('x[[]', '1')], {'x[[]': '1'}),
     ]
 )
-def test_nest(obj, expected):
+def test_nest(obj: List[Tuple[str, str]], expected: qstring.Nested) -> None:
     assert qstring.nest(obj) == expected
 
 
-def test_nest_maintains_order():
+def test_nest_maintains_order() -> None:
     nested = qstring.nest([
         ('a', '1'),
         ('b[a]', '1'),
@@ -39,8 +41,17 @@ def test_nest_maintains_order():
         ('c[a][c]', '3'),
     ])
     assert list(nested.keys()) == ['a', 'b', 'c']
-    assert list(nested['b'].keys()) == ['a', 'b', 'c']
-    assert list(nested['c']['a'].keys()) == ['a', 'b', 'c']
+
+    b = nested['b']
+    assert isinstance(b, dict)
+    assert list(b.keys()) == ['a', 'b', 'c']
+
+    c = nested['c']
+    assert isinstance(c, dict)
+
+    c_a = c['a']
+    assert isinstance(c_a, dict)
+    assert list(c_a.keys()) == ['a', 'b', 'c']
 
 
 @pytest.mark.parametrize(('target', 'source', 'expected'), [
@@ -65,7 +76,11 @@ def test_nest_maintains_order():
         {'a': {'b': '1', 'c': '2'}}
     ),
 ])
-def test_merge(target, source, expected):
+def test_merge(
+    target: qstring.Nested,
+    source: qstring.Nested,
+    expected: qstring.Nested
+) -> None:
     assert _merge(target, source) == expected
 
 
@@ -94,7 +109,11 @@ def test_merge(target, source, expected):
         ),
     ]
 )
-def test_merge_error(target, source, error):
+def test_merge_error(
+    target: qstring.Nested,
+    source: qstring.Nested,
+    error: str
+) -> None:
     with pytest.raises(qstring.ParameterTypeError) as exc_info:
         _merge(target, source)
     assert str(exc_info.value) == error
