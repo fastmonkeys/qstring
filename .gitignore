@@ -1,3 +1,4 @@
+.pdm-python
 *.egg-info
 *.pyc
 dist/
