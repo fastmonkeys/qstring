@@ -66,7 +66,7 @@ release = __version__
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -116,6 +116,7 @@ html_theme = "alabaster"
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
+    "description": "Parse querystring parameters to nested objects",
     "github_user": "fastmonkeys",
     "github_repo": "qstring",
     "github_banner": True,
