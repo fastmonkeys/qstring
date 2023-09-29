@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v\d+.\d+.\d+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@ddc33ca746b5716353581f988b29464200212702
+        with:
+          python-version: "3.8"
+      - name: Build artifacts
+        run: pdm build
+      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
+        with:
+          path: ./dist
+  release-github:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+      - name: Get release notes
+        run: |
+          awk '/\^{3,}/{flag=1;next}/^[0-9]+.[0-9]+.[0-9]+/{if (flag==1)exit}flag' CHANGES.rst > release.rst
+      - name: Convert release notes to Markdown
+        uses: docker://pandoc/core:2.9
+        with:
+          args: >-
+            --from rst
+            --output=release.md
+            --standalone
+            --to markdown_github
+            --wrap=none
+            release.rst
+      - name: Create release
+        run: >-
+          gh release create
+          --draft
+          --notes-file release.md
+          ${{ github.ref_name }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+  release-pypi:
+    needs: ["build"]
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@b7f401de30cb6434a1e19f805ff006643653240e
+        with:
+          packages-dir: artifact/
