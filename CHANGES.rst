@@ -1,11 +1,13 @@
 Changelog
 ---------
 
-0.3.0 (not yet released)
+1.0.0 (not yet released)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Added support for Python 3.8, 3.9, 3.10 and 3.11.
-- Dropped support for Python 2.7, 3.3, 3.4, 3.5, 3.6 and 3.7.
+- Added support for Python 3.8–3.11.
+- Added type hints for the project.
+- Use modern packaging metadata with ``pyproject.toml``.
+- Use ``pdm.backend`` as build backend.
 - Changed ``qstring.nest`` to use ``dict`` in the returned nested object instead
   of ``OrderedDict``. ``dict`` retains insertion order since Python 3.7, so
   ``OrderedDict`` usage was redundant here.
@@ -21,6 +23,11 @@ Changelog
 
       >>> qtstring.nest([('foo', '1'), ('foo', '2'), ('foo', '3')])
       {'foo': ['1', '2', '3']}
+
+- Removed support for Python 2.7 and 3.7 or earlier.
+- Removed ``future`` dependency.
+- Removed the ``__version__`` attribute. Use
+  ``importlib.metadata.version("qstring")`` instead
 
 0.2.1 (March 24, 2017)
 ^^^^^^^^^^^^^^^^^^^^^^
