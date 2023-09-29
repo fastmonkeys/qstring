@@ -1,12 +1,12 @@
 import re
-from typing import Dict, Generator, List, Literal, NamedTuple, Tuple, Union
+from typing import Dict, Generator, Iterable, List, Literal, NamedTuple, Tuple, Union
 
 from . import exc
 
 Nested = Dict[str, Union[str, List[str], "Nested"]]
 
 
-def nest(params: List[Tuple[str, str]]) -> Nested:
+def nest(params: Iterable[Tuple[str, str]]) -> Nested:
     """
     Create a nested object from a list of query string parameters.
 
@@ -37,7 +37,7 @@ def nest(params: List[Tuple[str, str]]) -> Nested:
 
 
 def _convert_params_list_to_dict(
-    params_list: List[Tuple[str, str]]
+    params_list: Iterable[Tuple[str, str]]
 ) -> Dict[str, Union[str, List[str]]]:
     params_dict: Dict[str, Union[str, List[str]]] = {}
     for key, value in params_list:
