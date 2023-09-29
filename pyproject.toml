@@ -4,7 +4,6 @@ build-backend = "pdm.backend"
 
 [project]
 name = "qstring"
-version = "0.2.0"
 description = "Parse querystring parameters to nested objects"
 readme = "README.rst"
 requires-python = ">=3.8"
@@ -26,6 +25,7 @@ classifiers = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 dependencies = []
+dynamic = ["version"]
 
 [project.urls]
 "Documentation" = "http://qstring.readthedocs.org"
@@ -38,6 +38,9 @@ pretty = true
 python_version = "3.8"
 show_error_codes = true
 strict = true
+
+[tool.pdm.version]
+source = "scm"
 
 [tool.pdm.dev-dependencies]
 lint = [
