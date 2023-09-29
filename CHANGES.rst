@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+1.0.1 (September 29, 2023)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Fixed ``qstring.nest`` to use more relaxed ``Iterable`` type for ``params``
+  over ``List``.
+
 1.0.0 (September 29, 2023)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
