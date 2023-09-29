@@ -6,3 +6,7 @@ build:
 sphinx:
   builder: singlehtml
   fail_on_warning: false
+python:
+  install:
+    - method: pip
+      path: .
