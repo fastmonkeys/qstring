@@ -4,7 +4,7 @@ Changelog
 1.0.0 (not yet released)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Added support for Python 3.8–3.11.
+- Added support for Python 3.8 to 3.12.
 - Added type hints for the project.
 - Use modern packaging metadata with ``pyproject.toml``.
 - Use ``pdm.backend`` as build backend.
