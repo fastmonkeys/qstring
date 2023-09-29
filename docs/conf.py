@@ -119,7 +119,7 @@ html_theme_options = {
     "description": "Parse querystring parameters to nested objects",
     "github_user": "fastmonkeys",
     "github_repo": "qstring",
-    "github_banner": True,
+    "github_banner": False,
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
