@@ -1,8 +1,8 @@
 Changelog
 ---------
 
-1.0.0 (not yet released)
-^^^^^^^^^^^^^^^^^^^^^^^^
+1.0.0 (September 29, 2023)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Added support for Python 3.8 to 3.12.
 - Added type hints for the project.
