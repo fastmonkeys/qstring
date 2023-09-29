@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Iterable, List, Tuple
 
 import pytest
 
@@ -28,6 +28,14 @@ from qstring.nest import _merge
 )
 def test_nest(obj: List[Tuple[str, str]], expected: qstring.Nested) -> None:
     assert qstring.nest(obj) == expected
+
+
+def test_nest_accepts_iterable() -> None:
+    def items() -> Iterable[Tuple[str, str]]:
+        yield ("foo", "1")
+        yield ("foo", "2")
+
+    assert qstring.nest(items()) == {"foo": ["1", "2"]}
 
 
 def test_nest_maintains_order() -> None:
